@@ -1,13 +1,8 @@
 package com.paulocoimbra.springboot;
 
-import com.paulocoimbra.springboot.domain.Category;
-import com.paulocoimbra.springboot.domain.City;
-import com.paulocoimbra.springboot.domain.Product;
-import com.paulocoimbra.springboot.domain.State;
-import com.paulocoimbra.springboot.repository.CategoryRepository;
-import com.paulocoimbra.springboot.repository.CityRepository;
-import com.paulocoimbra.springboot.repository.ProductRepository;
-import com.paulocoimbra.springboot.repository.StateRepository;
+import com.paulocoimbra.springboot.domain.*;
+import com.paulocoimbra.springboot.domain.enums.ClientType;
+import com.paulocoimbra.springboot.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +24,12 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	private CityRepository cityRepository;
+
+	@Autowired
+	private ClientRepository clientRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -65,6 +66,17 @@ public class Application implements CommandLineRunner {
 
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "1231231232", ClientType.PESSOAFISICA);
+		cli1.getPhoneNumbers().addAll(Arrays.asList("12312323", "867588758"));
+
+		Address a1 = new Address(null, "Rua flores", "300", "312312", cli1, c1);
+		Address a2 = new Address(null, "Avenida matos", "105", "484854", cli1, c2);
+
+		cli1.getAddresses().addAll(Arrays.asList(a1, a2));
+
+		clientRepository.saveAll(Arrays.asList(cli1));
+		addressRepository.saveAll(Arrays.asList(a1, a2));
 
 	}
 }

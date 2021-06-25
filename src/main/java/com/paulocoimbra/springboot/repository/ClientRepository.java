@@ -1,12 +1,10 @@
 package com.paulocoimbra.springboot.repository;
 
-import com.paulocoimbra.springboot.domain.City;
+import com.paulocoimbra.springboot.domain.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CityRepository extends JpaRepository<City, Integer> {
-
-
+public interface ClientRepository extends JpaRepository<Client, Integer> {
 
 }
