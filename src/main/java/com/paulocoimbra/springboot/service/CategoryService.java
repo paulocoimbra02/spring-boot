@@ -1,6 +1,7 @@
 package com.paulocoimbra.springboot.service;
 
 import com.paulocoimbra.springboot.domain.Category;
+import com.paulocoimbra.springboot.exception.ObjectNotFoundException;
 import com.paulocoimbra.springboot.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class CategoryService {
 
     public Category findById(Integer id){
         Optional<Category> category = repo.findById(id);
-        return category.orElse(null);
+        return category.orElseThrow(() -> new ObjectNotFoundException(
+                "Object not found! Id: " + id + ", Type: " + Category.class.getName()));
     }
 }

@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/categories")
 public class CategoryResource {
 
-	@Autowired
-	private CategoryService service;
+    @Autowired
+    private CategoryService service;
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(service.findById(id));
-	}
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> find(@PathVariable Integer id) {
+
+        return ResponseEntity.ok().body(service.findById(id));
+    }
 }
