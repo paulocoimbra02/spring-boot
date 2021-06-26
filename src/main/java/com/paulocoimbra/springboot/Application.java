@@ -2,12 +2,14 @@ package com.paulocoimbra.springboot;
 
 import com.paulocoimbra.springboot.domain.*;
 import com.paulocoimbra.springboot.domain.enums.ClientType;
+import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
 import com.paulocoimbra.springboot.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -30,6 +32,12 @@ public class Application implements CommandLineRunner {
 
 	@Autowired
 	private AddressRepository addressRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -77,6 +85,22 @@ public class Application implements CommandLineRunner {
 
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(a1, a2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Order1 ord1 = new Order1(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
+		Order1 ord2 = new Order1(null, sdf.parse("10/10/2017 19:35"), cli1, a2);
+
+		Payment payment1 = new PaymentWithCard(null, PaymentStatus.SETTLED, ord1, 6);
+		ord1.setPayment(payment1);
+
+		Payment payment2 = new PaymentWithBill(null, PaymentStatus.PENDING, ord2, sdf.parse("20/10/2017 00:00"), null);
+		ord2.setPayment(payment2);
+
+		cli1.getOrders().addAll(Arrays.asList(ord1, ord2));
+
+		orderRepository.saveAll(Arrays.asList(ord1, ord2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+
 
 	}
 }
