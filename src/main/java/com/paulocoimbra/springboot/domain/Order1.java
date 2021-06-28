@@ -3,7 +3,9 @@ package com.paulocoimbra.springboot.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Order1 implements Serializable {
@@ -25,6 +27,9 @@ public class Order1 implements Serializable {
     @ManyToOne
     @JoinColumn(name = "shipment_address_id")
     private Address shipmentAddress;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<ItemOrder> items = new HashSet<>();
 
     public Order1() {
     }
@@ -76,6 +81,14 @@ public class Order1 implements Serializable {
         this.shipmentAddress = shipmentAddress;
     }
 
+    public Set<ItemOrder> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<ItemOrder> items) {
+        this.items = items;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,4 +101,6 @@ public class Order1 implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }
