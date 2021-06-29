@@ -1,6 +1,7 @@
 package com.paulocoimbra.springboot.resources;
 
 import com.paulocoimbra.springboot.domain.Category;
+import com.paulocoimbra.springboot.dto.CategoryDTO;
 import com.paulocoimbra.springboot.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -18,7 +20,7 @@ public class CategoryResource {
     private CategoryService service;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id) {
+    public ResponseEntity<Category> find(@PathVariable Integer id) {
 
         return ResponseEntity.ok().body(service.findById(id));
     }
@@ -44,5 +46,12 @@ public class CategoryResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<Category> list = service.findAll();
+        List<CategoryDTO> listDto = list.stream().map(c -> new CategoryDTO(c)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 }
