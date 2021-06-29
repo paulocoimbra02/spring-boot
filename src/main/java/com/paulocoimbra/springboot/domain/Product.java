@@ -1,6 +1,6 @@
 package com.paulocoimbra.springboot.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +17,7 @@ public class Product implements Serializable {
     private String name;
     private Double price;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUCT_CATEGORY",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -25,6 +25,7 @@ public class Product implements Serializable {
     )
     private List<Category> categories = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.product")
     private Set<ItemOrder> items = new HashSet<>();
 
@@ -37,9 +38,10 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public List<Order1> getOrders() {
         List<Order1> list = new ArrayList<>();
-        for(ItemOrder x : items){
+        for (ItemOrder x : items) {
             list.add(x.getOrder());
         }
         return list;

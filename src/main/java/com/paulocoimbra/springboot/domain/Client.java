@@ -1,6 +1,6 @@
 package com.paulocoimbra.springboot.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paulocoimbra.springboot.domain.enums.ClientType;
 
 import javax.persistence.*;
@@ -20,7 +20,6 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer clientType;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
@@ -28,6 +27,7 @@ public class Client implements Serializable {
     @CollectionTable(name = "PHONE_NUMBER")
     private Set<String> phoneNumbers = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order1> orders = new ArrayList<>();
 

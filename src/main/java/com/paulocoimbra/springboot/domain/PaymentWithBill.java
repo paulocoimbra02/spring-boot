@@ -1,5 +1,6 @@
 package com.paulocoimbra.springboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
 
 import javax.persistence.Entity;
@@ -10,7 +11,10 @@ public class PaymentWithBill extends Payment {
 
     private static final long serialVersionUID = 144400346356575925L;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date expirationDate;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date paymentDate;
 
 

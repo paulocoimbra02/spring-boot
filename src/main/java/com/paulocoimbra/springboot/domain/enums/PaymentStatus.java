@@ -27,8 +27,8 @@ public enum PaymentStatus {
             return null;
         }
 
-        for(PaymentStatus ct : PaymentStatus.values()){
-            if(cod.equals(ct.getCod())) {
+        for (PaymentStatus ct : PaymentStatus.values()) {
+            if (cod.equals(ct.getCod())) {
                 return ct;
             }
         }

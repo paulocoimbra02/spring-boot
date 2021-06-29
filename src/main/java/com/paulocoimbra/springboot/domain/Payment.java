@@ -1,5 +1,6 @@
 package com.paulocoimbra.springboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public abstract class Payment implements Serializable {
     private Integer id;
     private Integer paymentStatus;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "order_id")
     @MapsId
@@ -46,6 +48,7 @@ public abstract class Payment implements Serializable {
         this.paymentStatus = paymentStatus.getCod();
     }
 
+    @JsonIgnore
     public Order1 getOrder() {
         return order1;
     }

@@ -1,5 +1,7 @@
 package com.paulocoimbra.springboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -10,6 +12,7 @@ public class ItemOrder implements Serializable {
 
     private static final long serialVersionUID = 144400346356575925L;
 
+    @JsonIgnore
     @EmbeddedId
     private ItemOrderPK id = new ItemOrderPK();
 
@@ -29,11 +32,12 @@ public class ItemOrder implements Serializable {
         this.price = price;
     }
 
-    public Order1 getOrder(){
+    @JsonIgnore
+    public Order1 getOrder() {
         return id.getOrder();
     }
 
-    public Product getProduct(){
+    public Product getProduct() {
         return id.getProduct();
     }
 

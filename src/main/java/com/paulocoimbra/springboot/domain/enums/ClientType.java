@@ -26,8 +26,8 @@ public enum ClientType {
             return null;
         }
 
-        for(ClientType ct : ClientType.values()){
-            if(cod.equals(ct.getCod())) {
+        for (ClientType ct : ClientType.values()) {
+            if (cod.equals(ct.getCod())) {
                 return ct;
             }
         }

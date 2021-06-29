@@ -1,5 +1,7 @@
 package com.paulocoimbra.springboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +17,8 @@ public class Order1 implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date placement;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "order1")
