@@ -1,4 +1,4 @@
-package com.paulocoimbra.springboot.exception;
+package com.paulocoimbra.springboot.service.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
 

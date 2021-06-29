@@ -1,9 +1,11 @@
 package com.paulocoimbra.springboot.service;
 
 import com.paulocoimbra.springboot.domain.Category;
-import com.paulocoimbra.springboot.exception.ObjectNotFoundException;
+import com.paulocoimbra.springboot.service.exception.DataIntegrityException;
+import com.paulocoimbra.springboot.service.exception.ObjectNotFoundException;
 import com.paulocoimbra.springboot.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,5 +30,14 @@ public class CategoryService {
     public Category update(Category category) {
         findById(category.getId());
         return repo.save(category);
+    }
+
+    public void delete(Integer id) {
+        findById(id);
+        try {
+            repo.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Not possible to delete a category with products");
+        }
     }
 }

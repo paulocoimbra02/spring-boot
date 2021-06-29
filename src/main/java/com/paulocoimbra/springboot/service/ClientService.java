@@ -1,7 +1,7 @@
 package com.paulocoimbra.springboot.service;
 
 import com.paulocoimbra.springboot.domain.Client;
-import com.paulocoimbra.springboot.exception.ObjectNotFoundException;
+import com.paulocoimbra.springboot.service.exception.ObjectNotFoundException;
 import com.paulocoimbra.springboot.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
