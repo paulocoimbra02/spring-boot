@@ -12,8 +12,8 @@ public class CategoryDTO implements Serializable {
     private static final long serialVersionUID = -8375035684904223618L;
     private Integer id;
 
-    @NotEmpty(message = "Mandatory field")
-    @Length(min = 5, max = 80, message = "Length must be between 5 and 80 characters")
+    @NotEmpty(message = "Field cannot be empty")
+    @Length(min = 5, max = 80, message = "Field length must be between 5 and 80 characters")
     private String name;
 
     public CategoryDTO() {
