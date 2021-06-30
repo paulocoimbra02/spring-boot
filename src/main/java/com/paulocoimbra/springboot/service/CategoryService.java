@@ -1,6 +1,7 @@
 package com.paulocoimbra.springboot.service;
 
 import com.paulocoimbra.springboot.domain.Category;
+import com.paulocoimbra.springboot.dto.CategoryDTO;
 import com.paulocoimbra.springboot.service.exception.DataIntegrityException;
 import com.paulocoimbra.springboot.service.exception.ObjectNotFoundException;
 import com.paulocoimbra.springboot.repository.CategoryRepository;
@@ -52,5 +53,9 @@ public class CategoryService {
     public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Category fromDTO(CategoryDTO categoryDTO){
+        return new Category(categoryDTO.getId(), categoryDTO.getName());
     }
 }

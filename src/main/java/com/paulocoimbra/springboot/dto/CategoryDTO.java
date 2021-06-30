@@ -1,13 +1,19 @@
 package com.paulocoimbra.springboot.dto;
 
 import com.paulocoimbra.springboot.domain.Category;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+
 
 public class CategoryDTO implements Serializable {
 
     private static final long serialVersionUID = -8375035684904223618L;
     private Integer id;
+
+    @NotEmpty(message = "Mandatory field")
+    @Length(min = 5, max = 80, message = "Length must be between 5 and 80 characters")
     private String name;
 
     public CategoryDTO() {
