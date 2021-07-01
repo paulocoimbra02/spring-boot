@@ -21,10 +21,6 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repo;
 
-    public List<Category> findAll() {
-        return repo.findAll();
-    }
-
     public Category findById(Integer id) {
         Optional<Category> category = repo.findById(id);
         return category.orElseThrow(() -> new ObjectNotFoundException(
@@ -48,6 +44,10 @@ public class CategoryService {
         }catch (DataIntegrityViolationException e){
             throw new DataIntegrityException("Not possible to delete a category with products");
         }
+    }
+
+    public List<Category> findAll() {
+        return repo.findAll();
     }
 
     public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
