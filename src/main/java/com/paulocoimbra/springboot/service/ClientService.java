@@ -55,7 +55,7 @@ public class ClientService {
         try {
             repo.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Not possible to delete a client with nested entities");
+            throw new DataIntegrityException("Not possible to delete a client with orders");
         }
     }
 
