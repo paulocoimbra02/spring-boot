@@ -2,9 +2,9 @@ package com.paulocoimbra.springboot.service;
 
 import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.dto.ClientDTO;
+import com.paulocoimbra.springboot.repository.ClientRepository;
 import com.paulocoimbra.springboot.service.exception.DataIntegrityException;
 import com.paulocoimbra.springboot.service.exception.ObjectNotFoundException;
-import com.paulocoimbra.springboot.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class ClientService {
         findById(id);
         try {
             repo.deleteById(id);
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Not possible to delete a client with nested entities");
         }
     }
@@ -46,16 +46,16 @@ public class ClientService {
         return repo.findAll();
     }
 
-    public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+    public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
     }
 
-    public Client fromDTO(ClientDTO obj){
+    public Client fromDTO(ClientDTO obj) {
         return new Client(obj.getId(), obj.getName(), obj.getEmail(), null, null);
     }
 
-    private void updateData(Client newObj, Client obj){
+    private void updateData(Client newObj, Client obj) {
         newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
     }

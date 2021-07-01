@@ -1,6 +1,5 @@
 package com.paulocoimbra.springboot.dto;
 
-import com.paulocoimbra.springboot.domain.Category;
 import com.paulocoimbra.springboot.domain.Client;
 import org.hibernate.validator.constraints.Length;
 
@@ -27,10 +26,10 @@ public class ClientDTO implements Serializable {
     public ClientDTO() {
     }
 
-    public ClientDTO(Client obj){
-        id= obj.getId();
+    public ClientDTO(Client obj) {
+        id = obj.getId();
         name = obj.getName();
-        email= obj.getEmail();
+        email = obj.getEmail();
     }
 
     public Integer getId() {
