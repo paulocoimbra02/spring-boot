@@ -2,13 +2,16 @@ package com.paulocoimbra.springboot.resources;
 
 import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.dto.ClientDTO;
+import com.paulocoimbra.springboot.dto.ClienteNewDTO;
 import com.paulocoimbra.springboot.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,16 @@ public class ClientResource {
 
     @Autowired
     private ClientService service;
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+        Client obj = service.fromDTO(objDto);
+        obj = service.insert(obj);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Integer id) {
