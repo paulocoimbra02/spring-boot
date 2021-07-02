@@ -2,7 +2,7 @@ package com.paulocoimbra.springboot.resources;
 
 import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.dto.ClientDTO;
-import com.paulocoimbra.springboot.dto.ClienteNewDTO;
+import com.paulocoimbra.springboot.dto.ClientNewDTO;
 import com.paulocoimbra.springboot.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class ClientResource {
     private ClientService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDto) {
         Client obj = service.fromDTO(objDto);
         obj = service.insert(obj);
 

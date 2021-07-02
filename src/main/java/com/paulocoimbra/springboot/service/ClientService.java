@@ -5,7 +5,7 @@ import com.paulocoimbra.springboot.domain.City;
 import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.domain.enums.ClientType;
 import com.paulocoimbra.springboot.dto.ClientDTO;
-import com.paulocoimbra.springboot.dto.ClienteNewDTO;
+import com.paulocoimbra.springboot.dto.ClientNewDTO;
 import com.paulocoimbra.springboot.repository.AddressRepository;
 import com.paulocoimbra.springboot.repository.ClientRepository;
 import com.paulocoimbra.springboot.service.exception.DataIntegrityException;
@@ -72,7 +72,7 @@ public class ClientService {
         return new Client(obj.getId(), obj.getName(), obj.getEmail(), null, null);
     }
 
-    public Client fromDTO(ClienteNewDTO obj) {
+    public Client fromDTO(ClientNewDTO obj) {
         Client cli = new Client(null, obj.getName(), obj.getEmail(), obj.getCpfOrCnpj(), ClientType.toEnum(obj.getClientType()));
         City city = new City(obj.getCityId(), null, null);
         Address address = new Address(null, obj.getStreet(), obj.getNumber(), obj.getZipCode(), cli, city);

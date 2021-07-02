@@ -1,27 +1,46 @@
 package com.paulocoimbra.springboot.dto;
 
+import com.paulocoimbra.springboot.service.validation.ClientInsert;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-public class ClienteNewDTO implements Serializable {
+@ClientInsert
+public class ClientNewDTO implements Serializable {
 
     private static final long serialVersionUID = -8375035684904223618L;
 
+    @NotEmpty(message = "Field cannot be empty")
+    @Length(min = 5, max = 120, message = "Field length must be between 5 and 80 characters")
     private String name;
+
+    @NotEmpty(message = "Field cannot be empty")
+    @Email(message = "Invalid email")
     private String email;
+
+    @NotEmpty(message = "Field cannot be empty")
     private String cpfOrCnpj;
     private Integer clientType;
 
+    @NotEmpty(message = "Field cannot be empty")
     private String street;
+
+    @NotEmpty(message = "Field cannot be empty")
     private String number;
+
+    @NotEmpty(message = "Field cannot be empty")
     private String zipCode;
 
+    @NotEmpty(message = "Field cannot be empty")
     private String phone1;
     private String phone2;
     private String phone3;
 
     private Integer cityId;
 
-    public ClienteNewDTO() {
+    public ClientNewDTO() {
     }
 
     public String getName() {
