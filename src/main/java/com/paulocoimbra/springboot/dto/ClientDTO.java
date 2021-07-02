@@ -1,13 +1,14 @@
 package com.paulocoimbra.springboot.dto;
 
 import com.paulocoimbra.springboot.domain.Client;
+import com.paulocoimbra.springboot.service.validation.ClientUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-
+@ClientUpdate
 public class ClientDTO implements Serializable {
 
     private static final long serialVersionUID = -8375035684904223618L;
