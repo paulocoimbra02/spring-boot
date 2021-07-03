@@ -1,10 +1,12 @@
 package com.paulocoimbra.springboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
 
 import javax.persistence.Entity;
 
 @Entity
+@JsonTypeName("paymentWithCard")
 public class PaymentWithCard extends Payment {
 
     private static final long serialVersionUID = 144400346356575925L;
