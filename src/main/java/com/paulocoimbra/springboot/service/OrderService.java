@@ -4,6 +4,7 @@ import com.paulocoimbra.springboot.domain.ItemOrder;
 import com.paulocoimbra.springboot.domain.Order1;
 import com.paulocoimbra.springboot.domain.PaymentWithBill;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
+import com.paulocoimbra.springboot.repository.ClientRepository;
 import com.paulocoimbra.springboot.repository.ItemOrderRepository;
 import com.paulocoimbra.springboot.repository.OrderRepository;
 import com.paulocoimbra.springboot.repository.PaymentRepository;
@@ -33,6 +34,9 @@ public class OrderService {
     @Autowired
     private ItemOrderRepository itemOrderRepository;
 
+    @Autowired
+    private ClientService clientService;
+
     public Order1 findById(Integer id) {
         Optional<Order1> order = repo.findById(id);
         return order.orElseThrow(() -> new ObjectNotFoundException(
@@ -43,6 +47,7 @@ public class OrderService {
     public Order1 insert(Order1 order) {
         order.setId(null);
         order.setPlacement(new Date());
+        order.setClient(clientService.findById(order.getClient().getId()));
         order.getPayment().setPaymentStatus(PaymentStatus.PENDING);
         order.getPayment().setOrder(order);
         if (order.getPayment() instanceof PaymentWithBill) {
@@ -53,10 +58,12 @@ public class OrderService {
         paymentRepository.save(order.getPayment());
         for (ItemOrder io : order.getItems()) {
             io.setDiscount(0.0);
-            io.setPrice(productService.findById(io.getProduct().getId()).getPrice());
+            io.setProduct(productService.findById(io.getProduct().getId()));
+            io.setPrice(io.getProduct().getPrice());
             io.setOrder(order);
         }
         itemOrderRepository.saveAll(order.getItems());
+        System.out.println(order);
         return order;
     }
 }
