@@ -127,7 +127,7 @@ public class Order1 implements Serializable {
         sb.append(", Payment status: ");
         sb.append(getPayment().getPaymentStatus().getDescription());
         sb.append("\nDetalhes:\n");
-        for(ItemOrder io : getItems()){
+        for (ItemOrder io : getItems()) {
             sb.append(io.toString());
         }
         sb.append("Total value: ");

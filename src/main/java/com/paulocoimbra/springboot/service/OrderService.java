@@ -4,7 +4,6 @@ import com.paulocoimbra.springboot.domain.ItemOrder;
 import com.paulocoimbra.springboot.domain.Order1;
 import com.paulocoimbra.springboot.domain.PaymentWithBill;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
-import com.paulocoimbra.springboot.repository.ClientRepository;
 import com.paulocoimbra.springboot.repository.ItemOrderRepository;
 import com.paulocoimbra.springboot.repository.OrderRepository;
 import com.paulocoimbra.springboot.repository.PaymentRepository;
