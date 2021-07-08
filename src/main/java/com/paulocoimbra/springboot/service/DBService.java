@@ -5,6 +5,7 @@ import com.paulocoimbra.springboot.domain.enums.ClientType;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
 import com.paulocoimbra.springboot.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -40,6 +41,9 @@ public class DBService {
 
     @Autowired
     private ItemOrderRepository itemOrderRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     public void instantiateTestDatabase() throws ParseException {
         Category cat1 = new Category(null, "Informática");
@@ -98,7 +102,7 @@ public class DBService {
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
-        Client cli1 = new Client(null, "Maria Silva", "paulomatheusc@gmail.com", "1231231232", ClientType.PESSOAFISICA);
+        Client cli1 = new Client(null, "Maria Silva", "paulomatheusc@gmail.com", "1231231232", ClientType.PESSOAFISICA, pe.encode("123"));
         cli1.getPhoneNumbers().addAll(Arrays.asList("12312323", "867588758"));
 
         Address a1 = new Address(null, "Rua flores", "300", "312312", cli1, c1);
