@@ -1,6 +1,8 @@
 package com.paulocoimbra.springboot.config;
 
 import com.paulocoimbra.springboot.service.DBService;
+import com.paulocoimbra.springboot.service.EmailService;
+import com.paulocoimbra.springboot.service.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,5 +29,10 @@ public class DevConfig {
 
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService() {
+        return new SmtpEmailService();
     }
 }
