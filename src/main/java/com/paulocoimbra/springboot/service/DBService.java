@@ -3,6 +3,7 @@ package com.paulocoimbra.springboot.service;
 import com.paulocoimbra.springboot.domain.*;
 import com.paulocoimbra.springboot.domain.enums.ClientType;
 import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
+import com.paulocoimbra.springboot.domain.enums.Profile;
 import com.paulocoimbra.springboot.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -102,16 +103,22 @@ public class DBService {
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
-        Client cli1 = new Client(null, "Maria Silva", "paulomatheusc@gmail.com", "1231231232", ClientType.PESSOAFISICA, pe.encode("123"));
+        Client cli1 = new Client(null, "Maria Silva", "paulomatheusc@hotmail.com", "86707687042", ClientType.PESSOAFISICA, pe.encode("123"));
         cli1.getPhoneNumbers().addAll(Arrays.asList("12312323", "867588758"));
+
+        Client cli2 = new Client(null, "Ana costa", "paulomatheusc@gmail.com", "70140669000", ClientType.PESSOAFISICA, pe.encode("123"));
+        cli2.getPhoneNumbers().addAll(Arrays.asList("846513454", "794514749"));
+        cli2.addProfile(Profile.ADMIN);
 
         Address a1 = new Address(null, "Rua flores", "300", "312312", cli1, c1);
         Address a2 = new Address(null, "Avenida matos", "105", "484854", cli1, c2);
+        Address a3 = new Address(null, "Avenida floriano", "2106", "13524982", cli2, c2);
 
         cli1.getAddresses().addAll(Arrays.asList(a1, a2));
+        cli2.getAddresses().addAll(Arrays.asList(a3));
 
-        clientRepository.saveAll(Arrays.asList(cli1));
-        addressRepository.saveAll(Arrays.asList(a1, a2));
+        clientRepository.saveAll(Arrays.asList(cli1, cli2));
+        addressRepository.saveAll(Arrays.asList(a1, a2, a3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Order1 ord1 = new Order1(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
