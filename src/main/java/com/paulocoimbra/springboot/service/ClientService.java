@@ -4,10 +4,13 @@ import com.paulocoimbra.springboot.domain.Address;
 import com.paulocoimbra.springboot.domain.City;
 import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.domain.enums.ClientType;
+import com.paulocoimbra.springboot.domain.enums.Profile;
 import com.paulocoimbra.springboot.dto.ClientDTO;
 import com.paulocoimbra.springboot.dto.ClientNewDTO;
 import com.paulocoimbra.springboot.repository.AddressRepository;
 import com.paulocoimbra.springboot.repository.ClientRepository;
+import com.paulocoimbra.springboot.security.UserSS;
+import com.paulocoimbra.springboot.service.exception.AuthorizationException;
 import com.paulocoimbra.springboot.service.exception.DataIntegrityException;
 import com.paulocoimbra.springboot.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,12 @@ public class ClientService {
     }
 
     public Client findById(Integer id) {
+
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Access Denied");
+        }
+
         Optional<Client> client = repo.findById(id);
         return client.orElseThrow(() -> new ObjectNotFoundException(
                 "Object not found! Id: " + id + ", Type: " + Client.class.getName()));

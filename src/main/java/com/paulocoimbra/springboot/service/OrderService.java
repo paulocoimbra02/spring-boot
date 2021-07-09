@@ -1,5 +1,6 @@
 package com.paulocoimbra.springboot.service;
 
+import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.domain.ItemOrder;
 import com.paulocoimbra.springboot.domain.Order1;
 import com.paulocoimbra.springboot.domain.PaymentWithBill;
@@ -7,8 +8,13 @@ import com.paulocoimbra.springboot.domain.enums.PaymentStatus;
 import com.paulocoimbra.springboot.repository.ItemOrderRepository;
 import com.paulocoimbra.springboot.repository.OrderRepository;
 import com.paulocoimbra.springboot.repository.PaymentRepository;
+import com.paulocoimbra.springboot.security.UserSS;
+import com.paulocoimbra.springboot.service.exception.AuthorizationException;
 import com.paulocoimbra.springboot.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,5 +74,16 @@ public class OrderService {
         //emailService.sendOrderConfirmationHtmlEmail(order);
 
         return order;
+    }
+
+    public Page<Order1> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+        UserSS user = UserService.authenticated();
+        if (user == null) {
+            throw new AuthorizationException("Access denied");
+        }
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        Client client = clientService.findById(user.getId());
+
+        return repo.findByClient(client, pageRequest);
     }
 }
