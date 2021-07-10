@@ -4,6 +4,7 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.paulocoimbra.springboot.service.exception.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class S3Service {
             return uploadFile(is, fileName, contentType);
         } catch (IOException e) {
             LOG.info("IOException: " + e.getMessage());
+            throw new FileException("IOException: " + e.getMessage());
         }
-        return null;
     }
 
     public URI uploadFile(InputStream is, String fileName, String contentType) {
@@ -47,14 +48,9 @@ public class S3Service {
             s3client.putObject(bucketName, fileName, is, meta);
             LOG.info("Upload finished");
             return s3client.getUrl(bucketName, fileName).toURI();
-        } catch (AmazonServiceException e) {
-            LOG.info("AmazonServiceException: " + e.getErrorMessage());
-            LOG.info("Status code: " + e.getErrorCode());
-        } catch (AmazonClientException e) {
-            LOG.info("AmazonClientException: " + e.getMessage());
         } catch (URISyntaxException e) {
             LOG.info("URISyntaxException: " + e.getMessage());
+            throw new FileException("URISyntaxException: " + e.getMessage());
         }
-        return null;
     }
 }
