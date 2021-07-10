@@ -1,5 +1,6 @@
 package com.paulocoimbra.springboot.service;
 
+import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.domain.Order1;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -14,4 +15,6 @@ public interface EmailService {
     void sendOrderConfirmationHtmlEmail(Order1 order1);
 
     void sendHtmlEmail(MimeMessage msg);
+
+    void sendNewPasswordEmail(Client cliente, String newPass);
 }

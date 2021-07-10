@@ -1,5 +1,6 @@
 package com.paulocoimbra.springboot.service;
 
+import com.paulocoimbra.springboot.domain.Client;
 import com.paulocoimbra.springboot.domain.Order1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,4 +70,24 @@ public abstract class AbstractEmailService implements EmailService {
         mmh.setText(htmlFromTemplatePedido(order), true);
         return mimeMessage;
     }
+
+    @Override
+    public void sendNewPasswordEmail(Client client, String newPass) {
+        SimpleMailMessage sm = prepareNewMailMessageFromOrder(client, newPass);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareNewMailMessageFromOrder(Client client, String newPass){
+        SimpleMailMessage sm = new SimpleMailMessage();
+
+        sm.setTo(client.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("New password request");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("New password: " + newPass);
+
+        return sm;
+    }
+
+
 }
