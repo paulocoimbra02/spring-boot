@@ -1,10 +1,7 @@
 package com.paulocoimbra.springboot.resources;
 
-import com.paulocoimbra.springboot.domain.Category;
 import com.paulocoimbra.springboot.domain.Order1;
-import com.paulocoimbra.springboot.dto.CategoryDTO;
 import com.paulocoimbra.springboot.service.OrderService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
