@@ -73,6 +73,21 @@ public class ClientService {
                 "Object not found! Id: " + id + ", Type: " + Client.class.getName()));
     }
 
+    public Client findByEmail(String email) {
+
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Access Denied");
+        }
+
+        Client client = repo.findByEmail(email);
+        if (client == null) {
+            throw new ObjectNotFoundException(
+                    "Object not found! Email: " + email + ", Type: " + Client.class.getName());
+        }
+        return client;
+    }
+
     public Client update(Client obj) {
         Client newObj = findById(obj.getId());
         updateData(newObj, obj);
